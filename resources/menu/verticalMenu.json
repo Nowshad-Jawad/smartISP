@@ -1,0 +1,239 @@
+{
+  "menu": [
+    {
+      "name": "Managers",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "managers",
+      "submenu": [
+        {
+          "url": "/",
+          "name": "Manager List",
+          "slug": "dashboard-manager-list"
+        },
+        {
+          "url": "dashboard/crm",
+          "name": "Roles",
+          "slug": "dashboard-roles"
+        },
+        {
+          "url": "dashboard/ecommerce",
+          "name": "Activity Log",
+          "slug": "dashboard-activity-log"
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "icon": "menu-icon tf-icons ti ti-layout-sidebar",
+      "slug": "users",
+      "submenu": [
+        {
+          "url": "user/add-user",
+          "name": "Add User",
+          "slug": "user-add-customer"
+        },
+        {
+          "url": "layouts/content-navbar",
+          "name": "View User",
+          "slug": "user-view-user"
+        },
+        {
+          "url": "user/pending-user",
+          "name": "Pending User",
+          "slug": "'user-pending-customer'"
+        },
+        {
+          "url": "layouts/horizontal",
+          "name": "New Registration",
+          "slug": "user-new-registration"
+        },
+        {
+          "url": "layouts/without-menu",
+          "name": "Expired User",
+          "slug": "user-expired-user"
+        },
+        {
+          "url": "layouts/without-navbar",
+          "name": "Online User",
+          "slug": "user-online-user"
+        }
+      ]
+    },
+    {
+      "name": "Mikrotik",
+      "icon": "menu-icon tf-icons ti ti-brand-php",
+      "slug": "mikrotik",
+      "submenu": [
+        {
+          "url": "mikrotik/add-mirotik",
+          "name": "Add Mikrotik",
+          "slug": "mikrotik-add-mikrotik"
+        },
+        {
+          "url": "mikrotik/view-mirotik",
+          "name": "View Mikrotik",
+          "slug": "mikrotik-view-mikrotik"
+        },
+        {
+          "url": "mikrotik/ip-pool",
+          "name": "Mikrotik IP Pool",
+          "slug": "mikrotik-ip-pool"
+        }
+      ]
+    },
+    {
+      "name": "Packages",
+      "icon": "menu-icon tf-icons ti ti-brand-php",
+      "slug": "packages",
+      "submenu": [
+        {
+          "url": "packages/add-package",
+          "name": "Add Package",
+          "slug": "packages-add-package"
+        },
+        {
+          "url": "packages/view-package",
+          "name": "View Package",
+          "slug": "packages-view-package"
+        }
+      ]
+    },
+    {
+      "name": "Network",
+      "icon": "menu-icon tf-icons ti ti-brand-php",
+      "slug": "network",
+      "submenu": [
+        {
+          "url": "network/add-zone",
+          "name": "Add Zone",
+          "slug": "network-add-zone"
+        },
+        {
+          "url": "network/view-zone",
+          "name": "View Zone",
+          "slug": "network-view-zone"
+        },
+        {
+          "url": "network/add-sub-zone",
+          "name": "Add Sub-Zone",
+          "slug": "network-add-sub-zone"
+        },
+        {
+          "url": "network/view-sub-zone",
+          "name": "View Sub-Zone",
+          "slug": "network-view-sub-zone"
+        },
+        {
+          "url": "network/add-olt",
+          "name": "Add OLT",
+          "slug": "network-add-olt"
+        },
+        {
+          "url": "network/add-onu",
+          "name": "Add ONU",
+          "slug": "network-add-onu"
+        }
+      ]
+    },
+    {
+      "name": "Account",
+      "icon": "menu-icon tf-icons ti ti-brand-php",
+      "slug": "account",
+      "submenu": [
+        {
+          "url": "laravel/user-management",
+          "name": "Category",
+          "slug": "account-category"
+        },
+        {
+          "url": "laravel/user-management",
+          "name": "Bill Collection",
+          "slug": "account-bill-collection"
+        },
+        {
+          "url": "laravel/user-management",
+          "name": "Daily Income",
+          "slug": "account-daily-income"
+        },
+        {
+          "url": "laravel/user-management",
+          "name": "Daily Expenses",
+          "slug": "account-daily-expenses"
+        }
+      ]
+    },
+    {
+      "name": "Billing",
+      "icon": "menu-icon tf-icons ti ti-brand-php",
+      "slug": "billing",
+      "submenu": [
+        {
+          "url": "laravel/user-management",
+          "name": "Invoices",
+          "slug": "billing-invoices"
+        },
+        {
+          "url": "laravel/user-management",
+          "name": "Received Payments",
+          "slug": "billing-received-payments"
+        }
+      ]
+    },
+    {
+      "name": "SMS",
+      "icon": "menu-icon tf-icons ti ti-brand-php",
+      "slug": "sms",
+      "submenu": [
+        {
+          "url": "laravel/user-management",
+          "name": "SMS Template",
+          "slug": "sms-sms-template"
+        },
+        {
+          "url": "laravel/user-management",
+          "name": "SMS Api",
+          "slug": "sms-sms-api"
+        },
+        {
+          "url": "laravel/user-management",
+          "name": "Send SMS",
+          "slug": "sms-send-sms"
+        },
+        {
+          "url": "laravel/user-management",
+          "name": "SMS Report",
+          "slug": "sms-sms-report"
+        }
+      ]
+    },
+    {
+      "name": "Setting",
+      "icon": "menu-icon tf-icons ti ti-brand-php",
+      "slug": "setting",
+      "submenu": [
+        {
+          "url": "laravel/user-management",
+          "name": "Software Setting",
+          "slug": "setting-software-setting"
+        },
+        {
+          "url": "laravel/user-management",
+          "name": "General Setting",
+          "slug": "setting-general-setting"
+        }
+      ]
+    },
+    {
+      "name": "Report",
+      "icon": "menu-icon tf-icons ti ti-brand-php",
+      "slug": "report",
+      "submenu": [
+        {
+          "url": "laravel/user-management",
+          "name": "BTRC Report",
+          "slug": "report-btrc-report"
+        }
+      ]
+    }
+  ]
+}
