@@ -13,7 +13,7 @@
             </div>
             <div class="col-12 text-center mt-2">
                 Package: {{$user->package->name}} <br>
-                Duration: {{$user->package->durationmeasure}} <br>
+                {{-- Duration: {{$user->package->durationmeasure}} <br> --}}
                 Bill: {{$user->package->price}} <br>
                 User Discount: {{$user->discount}}
             </div>
@@ -26,8 +26,19 @@
                 <input id="received_amount" name="received_amount" class="form-control" type="text" />
             </div>
             <div class="col-12 mt-2">
+              <label class="form-label" for="paid_by">Paid By</label>
+              <select id="paid_by" name="paid_by" class="select2 form-select">
+                  <option value="Bkash">Bkash</option>
+                  <option value="Cash">Cash</option>
+              </select>
+          </div>
+          <div class="col-12 mt-2">
+              <label class="form-label w-100" for="transaction_id">Transaction Id</label>
+              <input id="transaction_id" name="transaction_id" class="form-control" type="text" />
+          </div>
+            <div class="col-12 mt-2">
                 <label class="form-label" for="status">Status</label>
-                <select id="status" name="status" class="select2 form-select" onchange="toggleChargeableField()">
+                <select id="status" name="status" class="select2 form-select">
                     <option value="paid" selected>Paid</option>
                     <option value="due">Due</option>
                     <option value="over_paid">Over Paid</option>

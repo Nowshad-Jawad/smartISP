@@ -58,13 +58,36 @@ Route::post('network/store-onu', $controller_path.'\network\Network@storeOnu')->
 Route::get('user/add-user', $controller_path.'\customer\Customer@addCustomer')->name('user-add-customer');
 Route::post('user/store-user', $controller_path.'\customer\Customer@storeCustomer')->name('user-store-customer');
 Route::get('user/get-package-details/{id}', $controller_path.'\customer\Customer@getPackageDetails')->name('user-get-package-details');
-// Route::get('user/view-user', $controller_path.'\user\User@viewUser')->name('user-view-user');
+Route::get('user/view-user', $controller_path.'\customer\Customer@viewCustomer')->name('user-view-user');
 Route::get('user/pending-user', $controller_path.'\customer\Customer@pendingCustomer')->name('user-pending-customer');
 Route::post('user/approve-user/{id}', $controller_path.'\customer\Customer@approveCustomer')->name('user-approve-customer');
 Route::get('user/edit-user/{id}', $controller_path.'\customer\Customer@editCustomer')->name('user-edit-customer');
 Route::put('user/update-user/{id}', $controller_path.'\customer\Customer@updateCustomer')->name('user-update-customer');
 Route::get('user/edit-mikrotik-user/{id}', $controller_path.'\customer\Customer@editMikrotikCustomer')->name('user-edit-mikrotik-customer');
 Route::post('user/store-mikrotik-user', $controller_path.'\customer\Customer@storeMikrotikCustomer')->name('user-store-mikrotik-customer');
+Route::post('user/store-invoice', $controller_path.'\customer\Customer@storeInvoice')->name('user-store-invoice');
+
+//MENU: MANAGERS
+Route::get('managers/manager-list', $controller_path.'\manager\Manager@listManagers')->name('managers-manager-list');
+Route::post('managers/store-manager', $controller_path.'\manager\Manager@storeManager')->name('managers-store-manager');
+Route::put('managers/update-manager/{id}', $controller_path.'\manager\Manager@updateManager')->name('managers-update-manager');
+Route::get('managers/roles', $controller_path.'\manager\Manager@listRoles')->name('managers-role-list');
+Route::post('managers/store-role', $controller_path.'\manager\Manager@storeRole')->name('managers-store-roll');
+Route::put('managers/update-role/{id}', $controller_path.'\manager\Manager@updateRole')->name('managers-update-roll');
+Route::post('managers/assign_permission/{id}', $controller_path.'\manager\Manager@assignPermission')->name('managers-assign-permission');
+Route::post('managers/add-role-to-manager/{id}', $controller_path.'\manager\Manager@addRoleToManager')->name('managers-add-role-to-manager');
+
+// MENU: ACCOUNTS
+Route::get('accounts/category', $controller_path.'\account\Account@viewCategory')->name('account-category');
+Route::post('accounts/store-category', $controller_path.'\account\Account@storeCategory')->name('account-store-category');
+Route::put('accounts/update-category/{id}', $controller_path.'\account\Account@updateCategory')->name('account-update-category');
+Route::get('accounts/bill-collection', $controller_path.'\account\Account@viewBillCollection')->name('account-bill-collection');
+Route::get('accounts/bill-collection/get-details/${customer}', $controller_path.'\account\Account@customerDetails')->name('account-customer-details');
+Route::get('accounts/daily-incomes', $controller_path.'\account\Account@viewDailyIncome')->name('account-daily-income');
+Route::post('accounts/store-daily-income', $controller_path.'\account\Account@storeDailyIncome')->name('account-store-daily-income');
+Route::get('accounts/daily-expense', $controller_path.'\account\Account@viewDailyExpense')->name('account-daily-expenses');
+Route::post('accounts/store-daily-expense', $controller_path.'\account\Account@storeDailyExpense')->name('account-store-daily-expense');
+
 
 // Main Page Route
 Route::get('/', $controller_path . '\dashboard\Analytics@index')->name('dashboard-analytics');

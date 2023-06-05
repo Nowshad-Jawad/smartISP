@@ -92,13 +92,14 @@ class Customer extends Controller
         return response()->json(['bill' => $bill]);
     }
 
-    public function viewUser(){
-        return view('content.user.view-user');
+    public function viewCustomer(){
+        $users = CustomerModel::where('pending', false)->get();
+        return view('content.user.view-user', compact('users'));
     }
 
     public function pendingCustomer(){
 
-        $users = CustomerModel::where('pending', true)->get();
+        $users = CustomerModel::where('pending', true)->where('id_in_mkt', null)->get();
         $mikrotik_users = PppUser::all();
         return view('content.user.pending-user', compact('users', 'mikrotik_users'));
     }
@@ -107,6 +108,7 @@ class Customer extends Controller
 
         $request->validate([
             'received_amount' => 'required',
+            'paid_by' => 'required',
             'status' => 'required'
         ]);
         $query_data = '';
@@ -136,15 +138,21 @@ class Customer extends Controller
             Invoice::create([
                 'user_id' => $user->id,
                 'invoice_no' => "INV-{$user->id}-" . date('m-d-H'),
+                'invoice_for' => 'new_user',
                 'package_id' => $user->package_id,
                 'zone_id' => $user->zone_id,
                 'sub_zone_id' => 1,
                 'expire_date' => $expire_date_formatted,
                 'amount' => $amount,
                 'received_amount' => $request->received_amount,
+                'paid_by' => $request->paid_by,
+                'transaction_id' => $request->transaction_id,
                 'status' => $request->status,
                 'comment' => 'New User'
             ]);
+
+            $user->pending = false;
+            $user->save();
 
             DB::commit();
             // return success_message("User Create Successfully with Mikrotik");
@@ -219,10 +227,11 @@ class Customer extends Controller
     public function editMikrotikCustomer($id){
 
         $user = PppUser::where('id', $id)->first();
+        $customer_package = Package::where('name', $user->profile)->first();
         $zones = Zone::all();
         $packages = Package::all();
         $mikrotiks = Mikrotik::all();
-        return view('content.user.edit-mikrotik-user', compact('user', 'zones', 'packages', 'mikrotiks'));
+        return view('content.user.edit-mikrotik-user', compact('user', 'zones', 'packages', 'mikrotiks', 'customer_package'));
     }
 
     public function storeMikrotikCustomer(Request $request){
@@ -242,6 +251,7 @@ class Customer extends Controller
             'package_id' => 'required',
             'bill' => 'required',
             'discount' => 'required',
+            'billing_date' => 'required',
             'mikrotik_id' => 'required',
             'username' => 'required',
             'password' => 'required'
@@ -261,18 +271,45 @@ class Customer extends Controller
             'zone_id' => $request->zone_id,
             'registration_date' => $request->reg_date,
             'connection_date' => $request->conn_date,
+            'billing_date' => $request->billing_date,
             'package_id' => $request->package_id,
             'bill' => $request->bill,
             'discount' => $request->discount,
             'mikrotik_id' => $request->mikrotik_id,
             'username' => $request->username,
             'password' => $request->password,
-            'pending' => true
+            'pending' => false
         ]);
 
         $ppp_user = PppUser::where('id_in_mkt',  $request->id_in_mkt)->first();
         $ppp_user->added_in_customers_table = true;
         $ppp_user->save();
+
+        return redirect()->back();
+    }
+
+    public function storeInvoice(Request $request){
+
+        $request->validate([
+            'user_id' => 'required',
+            'invoice_for' => 'required',
+            'expire_date' => 'required',
+            'amount' => 'required',
+            'received_amount' => 'required',
+            'paid_by' => 'required',
+        ]);
+
+        Invoice::create([
+            'user_id' => $request->user_id,
+            'invoice_no' => "INV-{$request->user_id}-" . date('m-d-H'),
+            'invoice_for' => $request->invoice_for,
+            'expire_date' => $request->expire_date,
+            'amount' => $request->amount,
+            'received_amount' => $request->received_amount,
+            'status' => $request->status,
+            'paid_by' => $request->paid_by,
+            'transaction_id' => $request->transaction_id,
+        ]);
 
         return redirect()->back();
     }

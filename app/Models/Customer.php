@@ -24,6 +24,7 @@ class Customer extends Model
         'zone_id',
         'registration_date',
         'connection_date',
+        'billing_date',
         'package_id',
         'bill',
         'discount',

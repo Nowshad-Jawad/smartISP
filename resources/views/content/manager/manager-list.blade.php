@@ -1,4 +1,5 @@
 @extends('layouts/layoutMaster')
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"/>
 
 @section('content')
@@ -90,66 +91,55 @@
       <div class="col-md-4 user_plan"></div>
       <div class="col-md-4 user_status"></div>
     </div>
+    <div>
+        <button data-bs-toggle="modal" data-bs-target="#addManagerModal" class="btn btn-primary">Add Manager</button>
+    </div>
   </div>
   <div class="card-datatable table-responsive">
     <table class="datatables-users table border-top">
       <thead>
         <tr>
           <th>SL No.</th>
+          <th>Type</th>
           <th>Name</th>
           <th>Email</th>
-          <th>National ID</th>
           <th>Phone</th>
           <th>Zone</th>
-          <th>Package</th>
-          <th>Bill</th>
-          <th>Discount</th>
-          <th>Billing Date</th>
-          <th>Status</th>
+          <th>Sub Zone</th>
+          <th>Mikrotik</th>
+          <th>Address</th>
+          <th>Grace Allowed</th>
+          <th>Prefix Text</th>
           <th>Actions</th>
         </tr>
       </thead>
     <tbody>
-        @foreach($users as $user)
+        @foreach($managers as $manager)
             <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->full_name}}</td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->national_id}}</td>
-                <td>{{$user->phone}}</td>
-                <td>{{$user->zone->name}}</td>
-                <td>{{$user->package->name}}</td>
-                <td>{{$user->bill}}</td>
-                <td>{{$user->discount}}</td>
-                <td>
-                  @if($user->id_in_mkt != null)
-                    {{$user->billing_date}}
-                  @else
-                    {{$user->connection_date}}
-                  @endif
-                </td>
-                <td>
-                    @if($user->pending == false)
-                        Approved
-                    @else
-                        Pending
-                    @endif
-                </td>
-                <td class="d-flex justify-content-around">
-                    <a href="">
-                        <div class="cursor-pointer">
-                            <i class="bi bi-pencil-square"></i>
-                        </div>
-                    </a>
-                    <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addInvoiceModal_{{$user->id}}" ><i class="bi bi-cash-coin"></i></div>
-                    <div class="cursor-pointer" ><i class="bi bi-trash"></i></div>
-                </td>
+              <td>{{$manager->id}}</td>
+              <td>{{$manager->type}}</td>
+              <td>{{$manager->name}}</td>
+              <td>{{$manager->email}}</td>
+              <td>{{$manager->phone}}</td>
+              <td>{{$manager->zone->name}}</td>
+              <td>{{$manager->sub_zone->name}}</td>
+              <td>{{$manager->mikrotik->identity}}</td>
+              <td>{{$manager->address}}</td>
+              <td>{{$manager->grace_allowed}}</td>
+              <td>{{$manager->prefix_text}}</td>
+              <td class="d-flex justify-content-around">
+                  <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#editManagerModal_{{$manager->id}}"><i class="bi bi-pencil-square"></i> </div>
+                  <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addRoleToManagerModal_{{$manager->id}}" ><i class="bi bi-cash-coin"></i></div>
+                  <div class="cursor-pointer" ><i class="bi bi-trash"></i></div>
+              </td>
             </tr>
             {{-- @include('_partials/_modals/modal-add-new-cc', ['id' => $package->id]) --}}
-            @include('content/user/collect-bill', ['user' => $user])
+            @include('content/manager/edit-manager-modal', ['manager' => $manager, 'mikrotiks' => $mikrotiks, 'zones' => $zones, 'sub_zones' => $sub_zones])
+            @include('content/manager/add-role-to-manager-modal', ['roles' => $roles])
         @endforeach
     </tbody>
     </table>
+    @include('content/manager/add-manager-modal', ['mikrotiks' => $mikrotiks, 'zones' => $zones, 'sub_zones' => $sub_zones])
   </div>
 </div>
 @endsection

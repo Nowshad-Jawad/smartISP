@@ -6,12 +6,12 @@
       "slug": "managers",
       "submenu": [
         {
-          "url": "/",
+          "url": "managers/manager-list",
           "name": "Manager List",
-          "slug": "dashboard-manager-list"
+          "slug": "managers-manager-list"
         },
         {
-          "url": "dashboard/crm",
+          "url": "managers/roles",
           "name": "Roles",
           "slug": "dashboard-roles"
         },
@@ -33,7 +33,7 @@
           "slug": "user-add-customer"
         },
         {
-          "url": "layouts/content-navbar",
+          "url": "user/view-user",
           "name": "View User",
           "slug": "user-view-user"
         },
@@ -141,22 +141,22 @@
       "slug": "account",
       "submenu": [
         {
-          "url": "laravel/user-management",
+          "url": "accounts/category",
           "name": "Category",
           "slug": "account-category"
         },
         {
-          "url": "laravel/user-management",
+          "url": "accounts/bill-collection",
           "name": "Bill Collection",
           "slug": "account-bill-collection"
         },
         {
-          "url": "laravel/user-management",
+          "url": "accounts/daily-incomes",
           "name": "Daily Income",
           "slug": "account-daily-income"
         },
         {
-          "url": "laravel/user-management",
+          "url": "accounts/daily-expense",
           "name": "Daily Expenses",
           "slug": "account-daily-expenses"
         }

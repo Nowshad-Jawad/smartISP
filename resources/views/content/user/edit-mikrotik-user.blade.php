@@ -68,20 +68,24 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="package_id">Package</label>
-                <select id="package_id" name="package_id" class="select2 form-select" onchange="addPriceToBillField()">
-                    <option value="">Please Select One</option>
+                <select id="package_id" name="package_id" class="select2 form-select" onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;">
+                    <option>Please Select One</option>
                     @foreach($packages as $package)
-                        <option value="{{$package->id}}" >{{$package->name}}</option>
+                        <option value="{{$package->id}}" @if($package->id == $customer_package->id) selected  @endif>{{$package->name}}</option>
                     @endforeach
                 </select>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="bill">Bill</label>
-                <input type="text" class="form-control" id="bill" name="bill" placeholder="Bill" readonly  />
+                <input type="text" class="form-control" id="bill" name="bill" placeholder="Bill"  />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="discount">Discount</label>
                 <input type="text" class="form-control" id="discount" name="discount" placeholder="Discount" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="billing_date">Billing Date</label>
+                <input type="date" class="form-control" id="billing_date" name="billing_date" placeholder="Billing Date" />
             </div>
             <hr>
             <h4 class="fw-bold py-3 mb-4">Add Mikrotik Credentials</h4>

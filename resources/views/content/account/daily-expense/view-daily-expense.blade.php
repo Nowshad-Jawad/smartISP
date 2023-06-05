@@ -90,66 +90,48 @@
       <div class="col-md-4 user_plan"></div>
       <div class="col-md-4 user_status"></div>
     </div>
+    <div>
+        <button data-bs-toggle="modal" data-bs-target="#addExpenseModal" class="btn btn-primary">Add Expense</button>
+    </div>
   </div>
   <div class="card-datatable table-responsive">
     <table class="datatables-users table border-top">
       <thead>
         <tr>
           <th>SL No.</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>National ID</th>
-          <th>Phone</th>
-          <th>Zone</th>
-          <th>Package</th>
-          <th>Bill</th>
-          <th>Discount</th>
-          <th>Billing Date</th>
-          <th>Status</th>
+          <th>Creator Name</th>
+          <th>Voucher No</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Method</th>
+          <th>Transaction Id</th>
+          <th>Date</th>
+          <th>Claimant Name</th>
           <th>Actions</th>
         </tr>
       </thead>
     <tbody>
-        @foreach($users as $user)
+        @foreach($expenses as $expense)
             <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->full_name}}</td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->national_id}}</td>
-                <td>{{$user->phone}}</td>
-                <td>{{$user->zone->name}}</td>
-                <td>{{$user->package->name}}</td>
-                <td>{{$user->bill}}</td>
-                <td>{{$user->discount}}</td>
-                <td>
-                  @if($user->id_in_mkt != null)
-                    {{$user->billing_date}}
-                  @else
-                    {{$user->connection_date}}
-                  @endif
-                </td>
-                <td>
-                    @if($user->pending == false)
-                        Approved
-                    @else
-                        Pending
-                    @endif
-                </td>
-                <td class="d-flex justify-content-around">
-                    <a href="">
-                        <div class="cursor-pointer">
-                            <i class="bi bi-pencil-square"></i>
-                        </div>
-                    </a>
-                    <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addInvoiceModal_{{$user->id}}" ><i class="bi bi-cash-coin"></i></div>
-                    <div class="cursor-pointer" ><i class="bi bi-trash"></i></div>
-                </td>
+              <td>{{$expense->id}}</td>
+              <td>{{$expense->manager->name}}</td>
+              <td>{{$expense->vouchar_no}}</td>
+              <td>{{$expense->category->name}}</td>
+              <td>{{$expense->amount}}</td>
+              <td>{{$expense->method}}</td>
+              <td>{{$expense->transaction_id}}</td>
+              <td>{{$expense->date}}</td>
+              <td>{{$expense->expense_claimant}}</td>
+              <td class="d-flex justify-content-around">
+                  <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target=""><i class="bi bi-pencil-square"></i> </div>
+                  <div class="cursor-pointer" ><i class="bi bi-trash"></i></div>
+              </td>
             </tr>
-            {{-- @include('_partials/_modals/modal-add-new-cc', ['id' => $package->id]) --}}
-            @include('content/user/collect-bill', ['user' => $user])
+            {{-- @include('content/account/category/edit-category-modal', ['category' => $category]) --}}
         @endforeach
     </tbody>
     </table>
+    @include('content/account/daily-expense/add-daily-expense-modal')
   </div>
 </div>
 @endsection

@@ -63,7 +63,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="conn_date">Connection Date</label>
-                <input type="datetime-local" class="form-control" id="conn_date" name="conn_date" placeholder="Connection Date" />
+                <input type="date" class="form-control" id="conn_date" name="conn_date" placeholder="Connection Date" />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="package_id">Package</label>
