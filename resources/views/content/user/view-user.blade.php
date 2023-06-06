@@ -122,11 +122,7 @@
                 <td>{{$user->bill}}</td>
                 <td>{{$user->discount}}</td>
                 <td>
-                  @if($user->id_in_mkt != null)
-                    {{$user->billing_date}}
-                  @else
-                    {{$user->connection_date}}
-                  @endif
+                  {{$user->billing_date}}
                 </td>
                 <td>
                     @if($user->pending == false)

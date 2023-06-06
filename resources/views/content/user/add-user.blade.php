@@ -58,6 +58,15 @@
                 </select>
             </div>
             <div class="mb-3">
+                <label class="form-label" for="sub_zone_id">Sub Zone</label>
+                <select id="sub_zone_id" name="sub_zone_id" class="select2 form-select">
+                    <option value="">Please Select One</option>
+                    @foreach($subzones as $subzone)
+                        <option value="{{$subzone->id}}">{{$subzone->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
                 <label class="form-label" for="reg_date">Registration Date</label>
                 <input type="date" class="form-control" id="reg_date" name="reg_date" placeholder="Registration Date" />
             </div>

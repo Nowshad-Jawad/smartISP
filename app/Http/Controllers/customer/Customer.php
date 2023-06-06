@@ -5,6 +5,7 @@ namespace App\Http\Controllers\customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Zone;
+use App\Models\SubZone;
 use App\Models\Package;
 use App\Models\Mikrotik;
 use App\Models\PppUser;
@@ -32,9 +33,10 @@ class Customer extends Controller
     public function addCustomer(){
 
         $zones = Zone::all();
+        $subzones = SubZone::all();
         $packages = Package::all();
         $mikrotiks = Mikrotik::all();
-        return view('content.user.add-user', compact('zones', 'packages', 'mikrotiks'));
+        return view('content.user.add-user', compact('zones', 'packages', 'mikrotiks', 'subzones'));
     }
 
     public function storeCustomer(Request $request){
@@ -50,6 +52,7 @@ class Customer extends Controller
             'm_name' => 'required',
             'address' => 'required',
             'zone_id' => 'required',
+            'sub_zone_id' => 'required',
             'reg_date' => 'required',
             'conn_date' => 'required',
             'package_id' => 'required',
@@ -71,6 +74,7 @@ class Customer extends Controller
             'mother_name' => $request->m_name,
             'address' => $request->address,
             'zone_id' => $request->zone_id,
+            'sub_zone_id' => $request->sub_zone_id,
             'registration_date' => $request->reg_date,
             'connection_date' => $request->conn_date,
             'package_id' => $request->package_id,
@@ -116,7 +120,7 @@ class Customer extends Controller
             $user = CustomerModel::where('id', $id)->first();
             $package = $user->package;
             $now = new DateTime();
-            $expire_date = $now->getTimestamp() + $package->validdays;
+            $expire_date = strtotime($user->connection_date) + $package->validdays;
             $expire_date_formatted = gmdate("Y-m-d", $expire_date);
 
             if($user->discount != null){
@@ -135,7 +139,7 @@ class Customer extends Controller
             $this->query_data = $query_data[0]['expire_date'];
             $this->user_connection_service->create($user, $this->query_data);
 
-            Invoice::create([
+            $invoice = Invoice::create([
                 'user_id' => $user->id,
                 'invoice_no' => "INV-{$user->id}-" . date('m-d-H'),
                 'invoice_for' => 'new_user',
@@ -147,12 +151,36 @@ class Customer extends Controller
                 'received_amount' => $request->received_amount,
                 'paid_by' => $request->paid_by,
                 'transaction_id' => $request->transaction_id,
-                'status' => $request->status,
                 'comment' => 'New User'
             ]);
 
-            $user->pending = false;
-            $user->save();
+            if($amount > $request->received_amount){
+                $due = $amount - $request->received_amount;
+                $invoice->due_amount = $due;
+                $invoice->status = 'due';
+                $invoice->save();
+
+                $user->pending = false;
+                $user->billing_date = $expire_date_formatted;
+                $user->wallet = $request->received_amount - $amount; 
+                $user->save();
+            }
+            else if($amount < $request->received_amount){
+                $advanced = $request->received_amount - $amount;
+                $invoice->advanced_amount = $advanced;
+                $invoice->status = 'over_paid';
+                $invoice->save();
+
+                $user->pending = false;
+                $user->billing_date = $expire_date_formatted;
+                $user->wallet = $request->received_amount - $amount; 
+                $user->save();
+            }
+            else{
+                $user->pending = false;
+                $user->billing_date = $expire_date_formatted;
+                $user->save();
+            }
 
             DB::commit();
             // return success_message("User Create Successfully with Mikrotik");

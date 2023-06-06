@@ -22,6 +22,7 @@ class Customer extends Model
         'mother_name',
         'address',
         'zone_id',
+        'sub_zone_id',
         'registration_date',
         'connection_date',
         'billing_date',
@@ -35,6 +36,10 @@ class Customer extends Model
 
     public function zone(){
         return $this->belongsTo(Zone::class, 'zone_id');
+    }
+
+    public function sub_zone(){
+        return $this->belongsTo(SubZone::class, 'sub_zone_id');
     }
 
     public function package(){

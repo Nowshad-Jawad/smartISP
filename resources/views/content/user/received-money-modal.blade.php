@@ -23,26 +23,18 @@
             </div>
             <div class="col-12 mt-2">
                 <label class="form-label w-100" for="received_amount">Received Amount</label>
-                <input id="received_amount" name="received_amount" class="form-control" type="text" />
+                <input id="received_amount" name="received_amount" class="form-control" type="number" @if($user->discount != null) min="{{$user->bill - $user->discount}}" @else min="{{$user->bill}}" @endif />
             </div>
             <div class="col-12 mt-2">
               <label class="form-label" for="paid_by">Paid By</label>
-              <select id="paid_by" name="paid_by" class="select2 form-select">
+              <select id="paid_by" name="paid_by" class="select2 form-select" onchange="toggleTransactionIdField(this, {{$user->id}})">
                   <option value="Bkash">Bkash</option>
                   <option value="Cash">Cash</option>
               </select>
-          </div>
-          <div class="col-12 mt-2">
+            </div>
+            <div class="col-12 mt-2">
               <label class="form-label w-100" for="transaction_id">Transaction Id</label>
               <input id="transaction_id" name="transaction_id" class="form-control" type="text" />
-          </div>
-            <div class="col-12 mt-2">
-                <label class="form-label" for="status">Status</label>
-                <select id="status" name="status" class="select2 form-select">
-                    <option value="paid" selected>Paid</option>
-                    <option value="due">Due</option>
-                    <option value="over_paid">Over Paid</option>
-                </select>
             </div>
             <div class="col-12 text-center mt-4">
               <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>

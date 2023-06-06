@@ -82,7 +82,8 @@ Route::get('accounts/category', $controller_path.'\account\Account@viewCategory'
 Route::post('accounts/store-category', $controller_path.'\account\Account@storeCategory')->name('account-store-category');
 Route::put('accounts/update-category/{id}', $controller_path.'\account\Account@updateCategory')->name('account-update-category');
 Route::get('accounts/bill-collection', $controller_path.'\account\Account@viewBillCollection')->name('account-bill-collection');
-Route::get('accounts/bill-collection/get-details/${customer}', $controller_path.'\account\Account@customerDetails')->name('account-customer-details');
+Route::post('accounts/bill-collection/get-details/', $controller_path.'\account\Account@customerDetails')->name('account-customer-details');
+Route::post('accounts/store-bill-collection', $controller_path.'\account\Account@storeBillCollection')->name('account-store-bill-collection');
 Route::get('accounts/daily-incomes', $controller_path.'\account\Account@viewDailyIncome')->name('account-daily-income');
 Route::post('accounts/store-daily-income', $controller_path.'\account\Account@storeDailyIncome')->name('account-store-daily-income');
 Route::get('accounts/daily-expense', $controller_path.'\account\Account@viewDailyExpense')->name('account-daily-expenses');

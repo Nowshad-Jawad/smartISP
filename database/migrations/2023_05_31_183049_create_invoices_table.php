@@ -26,7 +26,7 @@ return new class extends Migration
             $table->dateTime('last_payment_date')->nullable();
             $table->decimal('last_payment_amount', 8, 2)->nullable();
             $table->tinyInteger('notification_status')->default(0);
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->string('comment')->nullable();
             $table->timestamps();
         });

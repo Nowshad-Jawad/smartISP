@@ -7,7 +7,7 @@
           <div class="text-center mb-4">
             <h3 class="mb-2">Add Bill</h3>
           </div>
-          <form action="" class="row g-3" method="POST">
+          <form action="{{route('account-store-bill-collection')}}" class="row g-3" method="POST">
             @csrf
             <div class="col-12">
                 <label class="form-label" for="customer">Customer Id</label>
@@ -32,10 +32,17 @@
             </div>
             <div class="col-12">
                 <label class="form-label w-100" for="monthly_bill">Monthly Bill</label>
-                <input id="monthly_bill" name="monthly_bill" class="form-control" type="text" />
+                <input id="monthly_bill" name="monthly_bill" class="form-control" type="text" readonly />
+                <p id="current_balance" class="h6 d-none"><strong>Current Wallet Balance: </strong> <mark id="wallet_balance"></mark></p>
             </div>
             <div class="col-12">
-                <label class="form-label w-100" for="received">Received</label>
+                <div class="d-flex justify-content-between">
+                    <label class="form-label" for="received">Received</label>
+                    <div id="add_from_wallet_field" class="d-none">
+                        <input type="checkbox" name="add_wallet_balance" id="add_wallet_balance" onchange="addWalletBalance(this)">
+                        <label for="add_wallet_balance">Add From Customer Wallet</label>
+                    </div>
+                </div>
                 <input id="received" name="received" class="form-control" type="text" />
             </div>
             <div class="col-12">
@@ -71,12 +78,47 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 function addCustomerId(customer){
-    // document.getElementById('customer_name').value = customer.value;
-    axios.get(`bill-collection/get-details/${customer.value}`).then((resp) => {
+    axios({
+        method: 'post',
+        url: 'bill-collection/get-details/',
+        data: {
+            customer: customer.value
+        }
+    }).then((resp) => {
         if(resp.status == 200){
-            console.log(resp.data);
+            document.getElementById('customer_name').value = resp.data.customer.full_name
+
+            if(resp.data.customer.discount == null){
+                document.getElementById('monthly_bill').value = resp.data.customer.bill
+            }
+            else{
+                document.getElementById('monthly_bill').value = (parseInt(resp.data.customer.bill) - parseInt(resp.data.customer.discount))
+            }
+
+            if(resp.data.customer.bill <= resp.data.customer.wallet){
+                document.getElementById('current_balance').classList.remove('d-none')
+                document.getElementById('wallet_balance').innerHTML = resp.data.customer.wallet 
+                document.getElementById('add_from_wallet_field').classList.remove('d-none')
+            }
+            else{
+                document.getElementById('current_balance').classList.add('d-none')
+                document.getElementById('wallet_balance').innerHTML = resp.data.customer.wallet 
+                document.getElementById('add_from_wallet_field').classList.add('d-none')
+            }         
         }
     })
+}
+
+function addWalletBalance(wallet){
+    if(wallet.checked == true){
+        let received_field = document.getElementById('received');
+        let monthly_bill = document.getElementById('monthly_bill');
+        received_field.value = monthly_bill.value;
+    }
+    else{
+        let received_field = document.getElementById('received');
+        received_field.value = null;
+    }
 }
 </script>
 
