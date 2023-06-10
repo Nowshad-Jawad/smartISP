@@ -185,17 +185,17 @@
       "slug": "sms",
       "submenu": [
         {
-          "url": "laravel/user-management",
+          "url": "sms/sms-template",
           "name": "SMS Template",
           "slug": "sms-sms-template"
         },
         {
-          "url": "laravel/user-management",
+          "url": "sms/sms-api",
           "name": "SMS Api",
           "slug": "sms-sms-api"
         },
         {
-          "url": "laravel/user-management",
+          "url": "sms/send-sms",
           "name": "Send SMS",
           "slug": "sms-send-sms"
         },

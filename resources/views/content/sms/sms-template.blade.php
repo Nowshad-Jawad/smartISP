@@ -91,7 +91,7 @@
       <div class="col-md-4 user_status"></div>
     </div>
     <div>
-      <button onclick="checkExpiration()">Check Expiration</button>
+        <button data-bs-toggle="modal" data-bs-target="#addNewTemplateModal">Add New</button>
     </div>
   </div>
   <div class="card-datatable table-responsive">
@@ -100,69 +100,37 @@
         <tr>
           <th>SL No.</th>
           <th>Name</th>
-          <th>Email</th>
-          <th>National ID</th>
-          <th>Phone</th>
-          <th>Zone</th>
-          <th>Package</th>
-          <th>Bill</th>
-          <th>Discount</th>
-          <th>Billing Date</th>
+          <th>SMS Api</th>
+          <th>Template</th>
+          <th>Total SMS Sent</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
     <tbody>
-        @foreach($users as $user)
+        @foreach($sms_templates as $sms_template)
             <tr>
-                <td>{{$user->id}}</td>
-                <td>{{$user->full_name}}</td>
-                <td>{{$user->email}}</td>
-                <td>{{$user->national_id}}</td>
-                <td>{{$user->phone}}</td>
-                <td>{{$user->zone->name}}</td>
-                <td>{{$user->package->name}}</td>
-                <td>{{$user->bill}}</td>
-                <td>{{$user->discount}}</td>
-                <td>
-                  {{$user->billing_date}}
-                </td>
-                <td>
-                    @if($user->pending == false)
-                        Approved
-                    @else
-                        Pending
-                    @endif
-                </td>
+                <td>{{$sms_template->id}}</td>
+                <td>{{$sms_template->name}}</td>
+                <td>{{$sms_template->sms_api->name}}</td>
+                <td>{{$sms_template->template}}</td>
+                {{-- <td>{{$sms_template->total_sms_sent}}</td> --}}
+                <td></td>
+                <td>{{$sms_template->status}}</td>
                 <td class="d-flex justify-content-around">
                     <a href="">
                         <div class="cursor-pointer">
                             <i class="bi bi-pencil-square"></i>
                         </div>
                     </a>
-                    <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addInvoiceModal_{{$user->id}}" ><i class="bi bi-cash-coin"></i></div>
+                    {{-- <div class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#addInvoiceModal_{{$sms_template->id}}" ><i class="bi bi-cash-coin"></i></div> --}}
                     <div class="cursor-pointer" ><i class="bi bi-trash"></i></div>
                 </td>
             </tr>
-            {{-- @include('_partials/_modals/modal-add-new-cc', ['id' => $package->id]) --}}
-            @include('content/user/collect-bill', ['user' => $user])
         @endforeach
     </tbody>
     </table>
   </div>
 </div>
+@include('content.sms.add-sms-template-modal')
 @endsection
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-  function checkExpiration(){
-    axios({
-        method: 'post',
-        url: 'view-user/disconnect-expired-user',
-    }).then((resp) => {
-        if(resp.status == 200){
-            console.log(resp)         
-        }
-    })
-  }
-</script>

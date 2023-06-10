@@ -6,7 +6,7 @@ use App\Models\IPpool;
 use App\Models\Package;
 use App\Models\Softwaresystem;
 use App\Models\User\UserBillingInfo;
-use App\Models\User\UserConnectionInfo;
+use App\Models\UserConnectionInfo;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

@@ -66,6 +66,7 @@ Route::put('user/update-user/{id}', $controller_path.'\customer\Customer@updateC
 Route::get('user/edit-mikrotik-user/{id}', $controller_path.'\customer\Customer@editMikrotikCustomer')->name('user-edit-mikrotik-customer');
 Route::post('user/store-mikrotik-user', $controller_path.'\customer\Customer@storeMikrotikCustomer')->name('user-store-mikrotik-customer');
 Route::post('user/store-invoice', $controller_path.'\customer\Customer@storeInvoice')->name('user-store-invoice');
+Route::post('user/view-user/disconnect-expired-user', $controller_path.'\customer\Customer@disconnectExpiredCustomer')->name('user-disconnect-expired-customer');
 
 //MENU: MANAGERS
 Route::get('managers/manager-list', $controller_path.'\manager\Manager@listManagers')->name('managers-manager-list');
@@ -88,6 +89,16 @@ Route::get('accounts/daily-incomes', $controller_path.'\account\Account@viewDail
 Route::post('accounts/store-daily-income', $controller_path.'\account\Account@storeDailyIncome')->name('account-store-daily-income');
 Route::get('accounts/daily-expense', $controller_path.'\account\Account@viewDailyExpense')->name('account-daily-expenses');
 Route::post('accounts/store-daily-expense', $controller_path.'\account\Account@storeDailyExpense')->name('account-store-daily-expense');
+
+//MENU: SMS
+Route::get('sms/sms-template', $controller_path.'\sms\SMS@viewSMSTemplate')->name('sms-sms-template');
+Route::get('sms/sms-api', $controller_path.'\sms\SMS@viewSMSApi')->name('sms-sms-api');
+Route::post('sms/store-sms-api', $controller_path.'\sms\SMS@storeSMSApi')->name('sms-store-sms-api');
+Route::post('sms/store-sms-template', $controller_path.'\sms\SMS@storeSMSTemplate')->name('sms-store-sms-template');
+Route::get('sms/send-sms', $controller_path.'\sms\SMS@createSendSms')->name('sms-send-sms');
+Route::post('sms/save-group', $controller_path.'\sms\SMS@storeGroup')->name('sms-save-group');
+Route::post('sms/get-sms-group-users', $controller_path.'\sms\SMS@getGroupUsers')->name('get-sms-group-users');
+Route::post('sms/send-sms', $controller_path.'\sms\SMS@sendSms')->name('send-sms');
 
 
 // Main Page Route

@@ -341,4 +341,18 @@ class Customer extends Controller
 
         return redirect()->back();
     }
+
+    public function disconnectExpiredCustomer(Request $request){
+
+        $customers = CustomerModel::where('pending', false)->get();
+        $today = now()->format('Y-m-d');
+        for($i=0; $i<count($customers); $i++){
+            if($customers[$i]->billing_date < $today){
+                $connection = new ConnectionService($customers[$i]->mikrotik->host, $customers[$i]->mikrotik->username, $customers[$i]->mikrotik->password, $customers[$i]->mikrotik->port);
+                $expired_package = Package::where('name', 'Expired')->where('mikrotik_id', $customers[$i]->mikrotik_id)->first();
+                $connection->disconnectUserProfile($customers[$i]->id, $customers[$i]->username, $expired_package->name);
+            }
+        }
+        return response()->json(['request received']);
+    }
 }
